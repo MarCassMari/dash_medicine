@@ -46,11 +46,15 @@ const SignUpForm = () => {
     },
   });
 
-  
+  function onSubmit(values: z.infer<typeof registerSchema>){
+
+    console.log(values);
+  }
+
   return (
     <Card>
       <Form {...form}>
-        <form  className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <CardHeader>
             <CardTitle>Criar conta</CardTitle>
             <CardDescription>Crie uma conta para continuar.</CardDescription>

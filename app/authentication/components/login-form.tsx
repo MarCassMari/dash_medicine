@@ -43,11 +43,15 @@ const LoginForm = () => {
     },
   });
 
+  function onSubmit(values: z.infer<typeof loginSchema>){
+
+    console.log(values);
+  }
 
   return (
     <Card>
       <Form {...form}>
-        <form  className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <CardHeader>
             <CardTitle>Login</CardTitle>
             <CardDescription>Faça login para continuar.</CardDescription>
