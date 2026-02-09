@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client"; //import the auth client
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 
@@ -46,9 +47,18 @@ const SignUpForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof registerSchema>){
+  async function onSubmit(values: z.infer<typeof registerSchema>){
+   
+    //27-01 -  sign up authentication 
 
-    console.log(values);
+     await authClient.signUp.email({
+            email: values.email,
+            password : values.password,
+            name: values.name,
+
+            callbackURL: "/dashboard"
+        },);
+    //27-01 -  sign up authentication - end 
   }
 
   return (

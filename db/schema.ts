@@ -19,8 +19,8 @@ export const usersTable = pgTable("users", {
 // 27/01 -  Auth schemas session, account e verification 
 
 
-export const sessionTable = pgTable(
-  "session",
+export const sessionsTable = pgTable(
+  "sessions",
   {
     id: text("id").primaryKey(),
     expiresAt: timestamp("expires_at").notNull(),
@@ -35,8 +35,8 @@ export const sessionTable = pgTable(
   }
 );
 
-export const accountTable = pgTable(
-  "account",
+export const accountsTable = pgTable(
+  "accounts",
   {
     id: text("id").primaryKey(),
     accountId: text("account_id").notNull(),
@@ -56,8 +56,8 @@ export const accountTable = pgTable(
   }
 );
 
-export const verificationTable = pgTable(
-  "verification",
+export const verificationsTable = pgTable(
+  "verifications",
   {
     id: text("id").primaryKey(),
     identifier: text("identifier").notNull(),
