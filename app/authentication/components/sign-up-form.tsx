@@ -21,6 +21,7 @@ import { FormControl, FormMessage } from "@/components/ui/form";
 import { FormItem, FormLabel } from "@/components/ui/form";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 
 const registerSchema = z.object({
@@ -37,6 +38,7 @@ const registerSchema = z.object({
 });
 
 const SignUpForm = () => {
+  const router = useRouter();
   
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -57,7 +59,12 @@ const SignUpForm = () => {
             name: values.name,
 
             callbackURL: "/dashboard"
-        },);
+        },{
+           onSuccess: () => {
+            router.push("/dashboard");
+           }
+        }
+      );
     //27-01 -  sign up authentication - end 
   }
 
