@@ -20,6 +20,9 @@ import { FormControl, FormMessage } from "@/components/ui/form";
 import { FormItem, FormLabel } from "@/components/ui/form";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 const loginSchema = z.object({
   email: z
@@ -34,7 +37,7 @@ const loginSchema = z.object({
 });
 
 const LoginForm = () => {
-  
+  const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -43,9 +46,20 @@ const LoginForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>){
+ async function onSubmit(values: z.infer<typeof loginSchema>){
 
-    console.log(values);
+    await authClient.signIn.email({
+      email: values.email,
+      password: values.password,
+      callbackURL: "/dashboard",
+    },{
+      onSuccess: () => {
+        router.push("/dashboard");
+      },
+      onError: ()=>{
+        toast.error("DADOS INVÁLIDOS!! VERIFIQUE SEUS DADOS E TENTE NOVAMENTE.");
+      }
+    });
   }
 
   return (
