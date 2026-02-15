@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client"; //import the auth client
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 
@@ -20,6 +21,8 @@ import { FormControl, FormMessage } from "@/components/ui/form";
 import { FormItem, FormLabel } from "@/components/ui/form";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 
 const registerSchema = z.object({
@@ -36,6 +39,7 @@ const registerSchema = z.object({
 });
 
 const SignUpForm = () => {
+  const router = useRouter();
   
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -46,9 +50,32 @@ const SignUpForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof registerSchema>){
+  async function onSubmit(values: z.infer<typeof registerSchema>){
+   
+    //27-01 -  sign up authentication 
 
-    console.log(values);
+     await authClient.signUp.email({
+            email: values.email,
+            password : values.password,
+            name: values.name,
+
+            callbackURL: "/dashboard"
+        },{
+           onSuccess: () => {
+            router.push("/dashboard");
+           },
+           onError: (ctx) => {
+            console.log(ctx.error);
+            if(ctx.error.code === "USER_ALREADY_EXISTS"){
+              toast.error("EMAIL JÁ CADASTRADO");
+             return;
+            } 
+            toast.error(ctx.error.message);
+
+           }
+        }
+      );
+    //27-01 -  sign up authentication - end 
   }
 
   return (
