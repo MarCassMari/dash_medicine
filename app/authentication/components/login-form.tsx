@@ -111,7 +111,7 @@ const LoginForm = () => {
               >
                 {form.formState.isSubmitting ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
+                ) : ( 
                   "Entrar"
                 )}
               </Button>
@@ -141,7 +141,7 @@ const LoginForm = () => {
                 Entrar com Google
               </Button>
             </div>
-          </CardFooter>
+          </CardFooter  >
         </form>
       </Form>
     </Card>

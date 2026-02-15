@@ -22,6 +22,7 @@ import { FormItem, FormLabel } from "@/components/ui/form";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 
 const registerSchema = z.object({
@@ -62,6 +63,15 @@ const SignUpForm = () => {
         },{
            onSuccess: () => {
             router.push("/dashboard");
+           },
+           onError: (ctx) => {
+            console.log(ctx.error);
+            if(ctx.error.code === "USER_ALREADY_EXISTS"){
+              toast.error("EMAIL JÁ CADASTRADO");
+             return;
+            } 
+            toast.error(ctx.error.message);
+
            }
         }
       );
