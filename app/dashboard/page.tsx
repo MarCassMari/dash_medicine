@@ -1,20 +1,22 @@
-"use client"
 
-import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
+import { auth } from "@/lib/auth";
+import SingOutButton from "./components/sign-out-button";
+import { headers } from "next/headers";
 
-const DashboardPage = () =>{
+const DashboardPage = async () =>{
 
-   const session = authClient.useSession();
+   const session = await auth.api.getSession({
+    headers: await headers(),
+   });
   
      return(
      
      <div>
     <h1>Dashboard</h1>
-     <h1>{session?.data?.user?.email}</h1>
-     <h1>{session?.data?.user?.name}</h1>
+     <h1>{session?.user?.email}</h1>
+     <h1>{session?.user?.name}</h1>
 
-   <Button onClick={()=>authClient.signOut()}>Sair</Button>
+   <SingOutButton/>
      </div>
    );
 
