@@ -6,6 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -23,13 +24,14 @@ await createClinic(data.name);
 toast.success("Clínica criada com sucesso");
 
 }catch(error){
+  if(isRedirectError(error)){
+    return;
+  }
   console.error(error);
   toast.error("Erro ao criar clínica");
-
 }
 }
-
-  
+ 
 export const ClinicForm = () =>{
     
     const form = useForm<z.infer<typeof clinicFormSchema>>({
