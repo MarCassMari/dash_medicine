@@ -51,14 +51,14 @@ return(
           </FormControl>
       </FormItem>
     )} />
+
+    <DialogFooter>
+      <Button type="submit" disabled={form.formState.isSubmitting}>{form.formState.isSubmitting &&(
+        <Loader2 className="w-4 h-4 animate-spin" />
+      )} Criar Clínica</Button>
+    </DialogFooter>
   </form>
 </Form>
-
-<DialogFooter>
-  <Button type="submit" disabled={form.formState.isSubmitting}>{form.formState.isSubmitting &&(
-    <Loader2 className="w-4 h-4 animate-spin" />
-  )} Criar Clínica</Button>
-</DialogFooter>
     </div>
 )
 }
