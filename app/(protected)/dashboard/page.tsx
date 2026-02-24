@@ -1,6 +1,6 @@
 
 import { auth } from "@/lib/auth";
-import SingOutButton from "./components/sign-out-button";
+import SingOutButton from "./_components/sign-out-button";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
